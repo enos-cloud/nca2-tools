@@ -112,7 +112,7 @@ function renderSeriesDetail() {
       
       <div style="background: rgba(0,0,0,0.25); padding: 20px; border-radius: 8px; border: 1px solid var(--border-dim);">
         <label style="display:block; margin-bottom:10px; color:var(--text-secondary); font-weight: bold;">⚔️ 選擇您的職業武器：</label>
-        <select id="series-weapon-select" class="price-input" style="width:100%; max-width: 500px; padding: 10px; font-size: 14px; cursor: pointer;">
+        <select id="series-weapon-select" class="price-input" style="width:100%; max-width: 500px; height: auto; min-height: 44px; padding: 8px 12px; font-size: 15px; cursor: pointer; line-height: 1.5;">
           ${weaponOptions}
         </select>
         
