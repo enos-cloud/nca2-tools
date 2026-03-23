@@ -145,9 +145,19 @@
             font-size: 13px;
             color: #666;
             margin-top: 5px;
+            line-height: 1.4;
         }
         .danger-text {
             color: #dc3545;
+            font-weight: bold;
+        }
+        .indent-label {
+            color: #555;
+            padding-left: 15px;
+            font-size: 13px;
+        }
+        .remain-text {
+            color: #28a745;
             font-weight: bold;
         }
     </style>
@@ -194,8 +204,17 @@
             <input type="number" id="box10mGems" value="368" step="1">
         </div>
         <div class="form-group">
+            <label class="indent-label">↳ 賣場可買數量 (箱)</label>
+            <input type="number" id="box10mQty" value="99" step="1">
+        </div>
+        <div style="border-top: 1px dashed #ddd; margin: 15px 0;"></div>
+        <div class="form-group">
             <label>200萬基納箱 需要寶石數</label>
             <input type="number" id="box2mGems" value="75" step="1">
+        </div>
+        <div class="form-group">
+            <label class="indent-label">↳ 賣場可買數量 (箱)</label>
+            <input type="number" id="box2mQty" value="99" step="1">
         </div>
     </div>
 
@@ -228,7 +247,8 @@
     <button onclick="calculate()">計算最佳方案</button>
 
     <div id="result-area">
-        <h3 style="margin-top:0; color:#333; font-size: 18px;">分析結果 (預算 <span id="displayBudget"></span> 台幣)</h3>
+        <h3 style="margin-top:0; color:#333; font-size: 18px;">分析結果 (總預算 <span id="displayBudget"></span> 台幣)</h3>
+        <div id="res-mixed" class="result-item"></div>
         <div id="res-10m" class="result-item"></div>
         <div id="res-2m" class="result-item"></div>
         <div id="res-seller" class="result-item"></div>
@@ -246,11 +266,18 @@
     }
 
     window.onload = function() {
-        const inputs = ['targetBudget', 'gemPreset', 'gemAmount', 'gemPrice', 'box10mGems', 'box2mGems', 'coinSellerRate', 'listingFee', 'transactionFee', 'extraFee'];
+        const inputs = ['targetBudget', 'gemPreset', 'gemAmount', 'gemPrice', 'box10mGems', 'box10mQty', 'box2mGems', 'box2mQty', 'coinSellerRate', 'listingFee', 'transactionFee', 'extraFee'];
         inputs.forEach(id => {
             const savedValue = localStorage.getItem(id);
             if (savedValue !== null) {
-                document.getElementById(id).value = savedValue;
+                const el = document.getElementById(id);
+                if (id === 'gemPreset' && savedValue === '4000,1700') {
+                    el.value = '4000,1900';
+                } else if (id === 'gemPrice' && savedValue === '1700') {
+                    el.value = '1900';
+                } else {
+                    el.value = savedValue;
+                }
             }
         });
     };
@@ -259,43 +286,95 @@
         const targetBudget = parseFloat(document.getElementById('targetBudget').value) || 6000;
         
         const gemAmount = parseFloat(document.getElementById('gemAmount').value) || 4000;
-        // 這裡的防呆預設值也同步改為 1900
         const gemPrice = parseFloat(document.getElementById('gemPrice').value) || 1900;
+        const costPerGem = gemPrice / gemAmount;
         
+        // 1000萬箱參數
         const box10mGems = parseFloat(document.getElementById('box10mGems').value) || 368;
+        const box10mQty = parseFloat(document.getElementById('box10mQty').value) || 0;
+        
+        // 200萬箱參數
         const box2mGems = parseFloat(document.getElementById('box2mGems').value) || 75;
+        const box2mQty = parseFloat(document.getElementById('box2mQty').value) || 0;
         
         const coinSellerRate = parseFloat(document.getElementById('coinSellerRate').value) || 10;
         const listingFee = parseFloat(document.getElementById('listingFee').value) || 2;
         const transactionFee = parseFloat(document.getElementById('transactionFee').value) || 10;
         const extraFee = parseFloat(document.getElementById('extraFee').value) || 0;
 
-        const inputs = ['targetBudget', 'gemPreset', 'gemAmount', 'gemPrice', 'box10mGems', 'box2mGems', 'coinSellerRate', 'listingFee', 'transactionFee', 'extraFee'];
+        // 儲存設定
+        const inputs = ['targetBudget', 'gemPreset', 'gemAmount', 'gemPrice', 'box10mGems', 'box10mQty', 'box2mGems', 'box2mQty', 'coinSellerRate', 'listingFee', 'transactionFee', 'extraFee'];
         inputs.forEach(id => {
             localStorage.setItem(id, document.getElementById(id).value);
         });
 
         document.getElementById('displayBudget').innerText = targetBudget.toLocaleString();
 
-        const costPerGem = gemPrice / gemAmount;
-        const totalGemsForBudget = targetBudget / costPerGem;
+        // --- 方案一：兌換所 1000萬箱 (單純只買1000萬) ---
+        const max10M_Boxes_Budget = Math.floor(targetBudget / (box10mGems * costPerGem));
+        const actual10M_Boxes = Math.min(max10M_Boxes_Budget, box10mQty);
+        const totalKinah_10M = actual10M_Boxes * 10000000;
+        const spentNTD_10M = actual10M_Boxes * box10mGems * costPerGem;
+        const remainNTD_10M = targetBudget - spentNTD_10M;
 
-        const total10M_Boxes = totalGemsForBudget / box10mGems;
-        const totalKinah_10M = total10M_Boxes * 10000000;
+        // --- 方案二：兌換所 200萬箱 (單純只買200萬) ---
+        const max2M_Boxes_Budget = Math.floor(targetBudget / (box2mGems * costPerGem));
+        const actual2M_Boxes = Math.min(max2M_Boxes_Budget, box2mQty);
+        const totalKinah_2M = actual2M_Boxes * 2000000;
+        const spentNTD_2M = actual2M_Boxes * box2mGems * costPerGem;
+        const remainNTD_2M = targetBudget - spentNTD_2M;
 
-        const total2M_Boxes = totalGemsForBudget / box2mGems;
-        const totalKinah_2M = total2M_Boxes * 2000000;
+        // --- 方案三：兌換所 混搭購買 (優先買 1000萬，餘額補 200萬) ---
+        const mix_actual10M_Boxes = Math.min(Math.floor(targetBudget / (box10mGems * costPerGem)), box10mQty);
+        const mix_spent10M = mix_actual10M_Boxes * box10mGems * costPerGem;
+        const mix_remainBudget = targetBudget - mix_spent10M;
+        
+        // 拿剩下的錢去買 200 萬箱
+        const mix_actual2M_Boxes = Math.min(Math.floor(mix_remainBudget / (box2mGems * costPerGem)), box2mQty);
+        const mix_spent2M = mix_actual2M_Boxes * box2mGems * costPerGem;
+        
+        const totalKinah_Mix = (mix_actual10M_Boxes * 10000000) + (mix_actual2M_Boxes * 2000000);
+        const totalSpent_Mix = mix_spent10M + mix_spent2M;
+        const remainNTD_Mix = targetBudget - totalSpent_Mix;
+        const totalGems_Mix = (mix_actual10M_Boxes * box10mGems) + (mix_actual2M_Boxes * box2mGems);
 
+        // --- 方案四：一般幣商 ---
         const grossKinah = targetBudget * (coinSellerRate * 10000);
         const totalFeePercentage = (listingFee + transactionFee + extraFee) / 100;
         const totalKinah_Seller = grossKinah * (1 - totalFeePercentage);
 
         const results = [
-            { id: 'res-10m', name: '兌換所 1000萬箱', kinah: totalKinah_10M, note: `需消耗約 ${Math.round(totalGemsForBudget).toLocaleString()} 顆寶石 (成本單價: ${costPerGem.toFixed(3)} 元/顆)` },
-            { id: 'res-2m', name: '兌換所 200萬箱', kinah: totalKinah_2M, note: `需消耗約 ${Math.round(totalGemsForBudget).toLocaleString()} 顆寶石 (成本單價: ${costPerGem.toFixed(3)} 元/顆)` },
-            { id: 'res-seller', name: '一般幣商收購 (拉裝備)', kinah: totalKinah_Seller, note: `已扣除 ${listingFee + transactionFee + extraFee}% 總手續費 (隱藏成本: ${((grossKinah - totalKinah_Seller) / 10000).toLocaleString()} 萬)<br><span class="danger-text">※ 警告：非官方現金交易存在鎖帳號風險。</span>` }
+            { 
+                id: 'res-mixed', 
+                name: '兌換所 混搭購買 (1000萬優先)', 
+                kinah: totalKinah_Mix, 
+                note: `購買 <b>${mix_actual10M_Boxes}</b> 箱 1000萬 + <b>${mix_actual2M_Boxes}</b> 箱 200萬 (總共消耗 ${Math.round(totalGems_Mix).toLocaleString()} 顆寶石)`,
+                budgetNote: `實際花費 ${Math.round(totalSpent_Mix).toLocaleString()} 台幣 / 剩餘 <span class="remain-text">${Math.round(remainNTD_Mix).toLocaleString()}</span> 台幣`
+            },
+            { 
+                id: 'res-10m', 
+                name: '兌換所 1000萬箱 (單買)', 
+                kinah: totalKinah_10M, 
+                note: `購買 <b>${actual10M_Boxes}</b> 箱 (消耗 ${Math.round(actual10M_Boxes * box10mGems).toLocaleString()} 顆寶石)`,
+                budgetNote: `實際花費 ${Math.round(spentNTD_10M).toLocaleString()} 台幣 / 剩餘 <span class="remain-text">${Math.round(remainNTD_10M).toLocaleString()}</span> 台幣`
+            },
+            { 
+                id: 'res-2m', 
+                name: '兌換所 200萬箱 (單買)', 
+                kinah: totalKinah_2M, 
+                note: `購買 <b>${actual2M_Boxes}</b> 箱 (消耗 ${Math.round(actual2M_Boxes * box2mGems).toLocaleString()} 顆寶石)`,
+                budgetNote: `實際花費 ${Math.round(spentNTD_2M).toLocaleString()} 台幣 / 剩餘 <span class="remain-text">${Math.round(remainNTD_2M).toLocaleString()}</span> 台幣`
+            },
+            { 
+                id: 'res-seller', 
+                name: '一般幣商收購 (拉裝備)', 
+                kinah: totalKinah_Seller, 
+                note: `已扣除 ${listingFee + transactionFee + extraFee}% 總手續費 (隱藏成本: ${((grossKinah - totalKinah_Seller) / 10000).toLocaleString()} 萬)<br><span class="danger-text">※ 警告：非官方現金交易存在鎖帳號風險。</span>`,
+                budgetNote: `全額花費 ${Math.round(targetBudget).toLocaleString()} 台幣 (無餘額)`
+            }
         ];
 
+        // 找出總獲取基納最高的選項
         let bestIndex = 0;
         for (let i = 1; i < results.length; i++) {
             if (results[i].kinah > results[bestIndex].kinah) {
@@ -311,18 +390,23 @@
             const kinahInYi = (res.kinah / 100000000).toFixed(2); 
             const kinahInWan = Math.floor(res.kinah / 10000).toLocaleString(); 
             
-            if (index === bestIndex) {
+            // 如果數量為 0 或預算不足以購買任何一箱的防呆顯示
+            const displayYiWan = res.kinah > 0 ? `約 <b>${kinahInYi} 億</b> (${kinahInWan} 萬)` : `無法購買`;
+
+            if (index === bestIndex && res.kinah > 0) {
                 el.className = 'result-item highlight';
-                el.innerHTML = `<div class="highlight-title">🏆 [最划算] ${res.name}</div>
+                el.innerHTML = `<div class="highlight-title">🏆 [總量最多] ${res.name}</div>
                                 預計實拿: <span class="number">${formattedKinah}</span> 基納<br>
-                                <div class="sub-text">約 <b>${kinahInYi} 億</b> (${kinahInWan} 萬)</div>
-                                <div class="sub-text">💡 ${res.note}</div>`;
+                                <div class="sub-text">${displayYiWan}</div>
+                                <div class="sub-text">💡 ${res.note}</div>
+                                <div class="sub-text">💰 ${res.budgetNote}</div>`;
             } else {
                 el.className = 'result-item';
                 el.innerHTML = `<div class="normal-title">▪️ ${res.name}</div>
                                 預計實拿: <span class="number">${formattedKinah}</span> 基納<br>
-                                <div class="sub-text">約 <b>${kinahInYi} 億</b> (${kinahInWan} 萬)</div>
-                                <div class="sub-text">💡 ${res.note}</div>`;
+                                <div class="sub-text">${displayYiWan}</div>
+                                <div class="sub-text">💡 ${res.note}</div>
+                                <div class="sub-text">💰 ${res.budgetNote}</div>`;
             }
         });
     }
