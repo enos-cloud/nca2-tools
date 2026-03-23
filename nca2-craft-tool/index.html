@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AION2 裝備製作成本計算器 | Crafting Cost Calculator</title>
+  <meta name="description" content="AION2 永恆紀元2 裝備製作成本計算器 — 計算從交易所購買材料製作裝備的總基納成本">
+  <meta name="keywords" content="AION2, 永恆紀元2, 裝備製作, 成本計算, 基納, 交易所">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========== Header ========== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">A2</div>
+        <div>
+          <div class="logo-text">AION2 CRAFT</div>
+          <div class="logo-subtitle">裝備製作成本計算器</div>
+        </div>
+      </div>
+      <div class="header-info">
+        <span>💡 價格會自動儲存到瀏覽器</span>
+        <span>📊 支援匯出報表</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Main Content ========== -->
+  <main class="main-container">
+    <div class="content-grid">
+
+      <!-- 左側面板：裝備選擇 -->
+      <aside class="sidebar">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="icon">⚔️</span>
+            <h2>裝備選擇</h2>
+          </div>
+          
+          <!-- 類別篩選 -->
+          <div class="filter-tabs" id="filter-tabs">
+            <!-- 由 JS 動態生成 -->
+          </div>
+          
+          <!-- 裝備清單 -->
+          <div class="equipment-list" id="equipment-list">
+            <!-- 由 JS 動態生成 -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- 右側主要內容 -->
+      <section class="main-content">
+        <!-- 裝備詳情 + 材料清單 -->
+        <div id="detail-container">
+          <!-- 由 JS 動態生成 -->
+        </div>
+
+        <!-- 總成本匯總 -->
+        <div class="cost-summary">
+          <div class="cost-label">
+            <h3>💰 製作總成本</h3>
+            <p id="total-info">選擇裝備後開始輸入材料價格</p>
+          </div>
+          <div class="cost-total">
+            <span class="cost-amount" id="total-amount">0</span>
+            <span class="cost-currency">基納</span>
+          </div>
+          <div class="cost-actions">
+            <button class="btn btn-primary" onclick="exportReport()" data-tooltip="複製成本報表到剪貼簿">
+              📋 匯出報表
+            </button>
+            <button class="btn btn-secondary" onclick="clearAllPrices()" data-tooltip="清除所有已輸入的價格">
+              🗑️ 清除
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ========== Scripts ========== -->
+  <script src="js/items.js"></script>
+  <script src="js/recipes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
