@@ -9,14 +9,14 @@ const RECIPES = {
     category: "Greatsword",
     materials: [
       { name: "達人閃耀的奧里哈康巨劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒巫蠱", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
   "應龍王巨劍": {
@@ -24,14 +24,14 @@ const RECIPES = {
     category: "Greatsword",
     materials: [
       { name: "達人閃耀的奧里哈康巨劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒心血", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
 
@@ -41,14 +41,14 @@ const RECIPES = {
     category: "Sword",
     materials: [
       { name: "達人閃耀的奧里哈康長劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王長劍": {
@@ -56,14 +56,14 @@ const RECIPES = {
     category: "Sword",
     materials: [
       { name: "達人閃耀的奧里哈康長劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
 
@@ -73,14 +73,14 @@ const RECIPES = {
     category: "Dagger",
     materials: [
       { name: "達人閃耀的奧里哈康短劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王短劍": {
@@ -88,14 +88,14 @@ const RECIPES = {
     category: "Dagger",
     materials: [
       { name: "達人閃耀的奧里哈康短劍", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
 
@@ -105,14 +105,14 @@ const RECIPES = {
     category: "Bow",
     materials: [
       { name: "達人閃耀的奧里哈康弓", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒巫蠱", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
   "應龍王弓": {
@@ -120,14 +120,14 @@ const RECIPES = {
     category: "Bow",
     materials: [
       { name: "達人閃耀的奧里哈康弓", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒心血", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
 
@@ -137,14 +137,14 @@ const RECIPES = {
     category: "Magicbook",
     materials: [
       { name: "達人閃耀的奧里哈康魔法書", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王魔法書": {
@@ -152,14 +152,14 @@ const RECIPES = {
     category: "Magicbook",
     materials: [
       { name: "達人閃耀的奧里哈康魔法書", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
 
@@ -169,14 +169,14 @@ const RECIPES = {
     category: "Orb",
     materials: [
       { name: "達人閃耀的奧里哈康法珠", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王法珠": {
@@ -184,14 +184,14 @@ const RECIPES = {
     category: "Orb",
     materials: [
       { name: "達人閃耀的奧里哈康法珠", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
 
@@ -201,14 +201,14 @@ const RECIPES = {
     category: "Mace",
     materials: [
       { name: "達人閃耀的奧里哈康釘錘", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王釘錘": {
@@ -216,14 +216,14 @@ const RECIPES = {
     category: "Mace",
     materials: [
       { name: "達人閃耀的奧里哈康釘錘", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
 
@@ -233,14 +233,14 @@ const RECIPES = {
     category: "Staff",
     materials: [
       { name: "達人閃耀的奧里哈康法杖", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒巫蠱", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
   "應龍王法杖": {
@@ -248,14 +248,14 @@ const RECIPES = {
     category: "Staff",
     materials: [
       { name: "達人閃耀的奧里哈康法杖", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 122 },
-      { name: "憤怒思念(刻印)", qty: 18 },
-      { name: "憤怒意志(刻印)", qty: 27 },
-      { name: "憤怒自我(刻印)", qty: 42 },
+      { name: "憤怒思念", qty: 18 },
+      { name: "憤怒意志", qty: 27 },
+      { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒心血", qty: 19 },
       { name: "燦爛的奧里哈康礦石", qty: 121 },
-      { name: "燦爛的奧德(刻印)", qty: 70 }
+      { name: "燦爛的奧德", qty: 70 }
     ]
   },
 
@@ -265,14 +265,14 @@ const RECIPES = {
     category: "Guarder",
     materials: [
       { name: "達人閃耀的奧里哈康臂甲", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強固龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒巫蠱", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   },
   "應龍王臂甲": {
@@ -280,14 +280,14 @@ const RECIPES = {
     category: "Guarder",
     materials: [
       { name: "達人閃耀的奧里哈康臂甲", qty: 5 },
-      { name: "達人最上級提煉石(刻印)", qty: 50 },
+      { name: "達人最上級提煉石", qty: 50 },
       { name: "提煉的強結龍族角", qty: 98 },
-      { name: "憤怒思念(刻印)", qty: 14 },
-      { name: "憤怒意志(刻印)", qty: 22 },
-      { name: "憤怒自我(刻印)", qty: 34 },
+      { name: "憤怒思念", qty: 14 },
+      { name: "憤怒意志", qty: 22 },
+      { name: "憤怒自我", qty: 34 },
       { name: "發狂的憤怒心血", qty: 15 },
       { name: "燦爛的奧里哈康礦石", qty: 97 },
-      { name: "燦爛的奧德(刻印)", qty: 56 }
+      { name: "燦爛的奧德", qty: 56 }
     ]
   }
 };

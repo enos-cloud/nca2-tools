@@ -127,7 +127,7 @@ const ITEMS = {
   "被侵蝕的支配者鎖鏈": { image: "images/weapons/Guarder/ErodedDominatorGuarder.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
 
   // ========== 製作材料 ==========
-  "達人最上級提煉石(刻印)": { image: "images/materials/MasterSupremeRefinerStone_Bind.png", grade: "Unique", type: "material" },
+  "達人最上級提煉石": { image: "images/materials/MasterSupremeRefinerStone_Bind.png", grade: "Unique", type: "material" },
   "達人最上級提煉石":       { image: "images/materials/MasterSupremeRefinerStone.png", grade: "Unique", type: "material" },
   "提煉的強固龍族角":       { image: "images/materials/RefinedSolidBalaurHorn.png", grade: "Unique", type: "material" },
   "提煉的強結龍族角":       { image: "images/materials/RefinedFirmBalaurHorn.png", grade: "Unique", type: "material" },
@@ -135,31 +135,31 @@ const ITEMS = {
   "鞣製的強結龍族皮革":     { image: "images/materials/TannedFirmBalaurLeather.png", grade: "Unique", type: "material" },
   "強化的強固龍族鱗片":     { image: "images/materials/EnhancedSolidBalaurScale.png", grade: "Unique", type: "material" },
   "強化的強結龍族鱗片":     { image: "images/materials/EnhancedFirmBalaurScale.png", grade: "Unique", type: "material" },
-  "憤怒思念(刻印)":         { image: "images/materials/AngerThought_Bind.png", grade: "Unique", type: "material" },
+  "憤怒思念":         { image: "images/materials/AngerThought_Bind.png", grade: "Unique", type: "material" },
   "憤怒思念":               { image: "images/materials/AngerThought.png", grade: "Unique", type: "material" },
-  "憤怒意志(刻印)":         { image: "images/materials/AngerWill_Bind.png", grade: "Unique", type: "material" },
+  "憤怒意志":         { image: "images/materials/AngerWill_Bind.png", grade: "Unique", type: "material" },
   "憤怒意志":               { image: "images/materials/AngerWill.png", grade: "Unique", type: "material" },
-  "憤怒自我(刻印)":         { image: "images/materials/AngerSelf_Bind.png", grade: "Unique", type: "material" },
+  "憤怒自我":         { image: "images/materials/AngerSelf_Bind.png", grade: "Unique", type: "material" },
   "憤怒自我":               { image: "images/materials/AngerSelf.png", grade: "Unique", type: "material" },
-  "憤怒昇華(刻印)":         { image: "images/materials/AngerSublimation_Bind.png", grade: "Unique", type: "material" },
+  "憤怒昇華":         { image: "images/materials/AngerSublimation_Bind.png", grade: "Unique", type: "material" },
   "憤怒昇華":               { image: "images/materials/AngerSublimation.png", grade: "Unique", type: "material" },
-  "憤怒願望(刻印)":         { image: "images/materials/AngerDesire_Bind.png", grade: "Unique", type: "material" },
+  "憤怒願望":         { image: "images/materials/AngerDesire_Bind.png", grade: "Unique", type: "material" },
   "憤怒願望":               { image: "images/materials/AngerDesire.png", grade: "Unique", type: "material" },
-  "發狂的憤怒巫蠱(刻印)":   { image: "images/materials/CrazyAngerVoodoo_Bind.png", grade: "Epic", type: "material" },
+  "發狂的憤怒巫蠱":   { image: "images/materials/CrazyAngerVoodoo_Bind.png", grade: "Epic", type: "material" },
   "發狂的憤怒巫蠱":         { image: "images/materials/CrazyAngerVoodoo.png", grade: "Epic", type: "material" },
-  "發狂的憤怒心血(刻印)":   { image: "images/materials/CrazyAngerBlood_Bind.png", grade: "Epic", type: "material" },
+  "發狂的憤怒心血":   { image: "images/materials/CrazyAngerBlood_Bind.png", grade: "Epic", type: "material" },
   "發狂的憤怒心血":         { image: "images/materials/CrazyAngerBlood.png", grade: "Epic", type: "material" },
-  "強固的龍族皮革(刻印)":   { image: "images/materials/SolidBalaurLeather_Bind.png", grade: "Unique", type: "material" },
+  "強固的龍族皮革":   { image: "images/materials/SolidBalaurLeather_Bind.png", grade: "Unique", type: "material" },
   "強固的龍族皮革":         { image: "images/materials/SolidBalaurLeather.png", grade: "Unique", type: "material" },
-  "強固的龍族角(刻印)":     { image: "images/materials/SolidBalaurHorn_Bind.png", grade: "Unique", type: "material" },
+  "強固的龍族角":     { image: "images/materials/SolidBalaurHorn_Bind.png", grade: "Unique", type: "material" },
   "強固的龍族角":           { image: "images/materials/SolidBalaurHorn.png", grade: "Unique", type: "material" },
-  "強固的龍族鱗片(刻印)":   { image: "images/materials/SolidBalaurScale_Bind.png", grade: "Unique", type: "material" },
+  "強固的龍族鱗片":   { image: "images/materials/SolidBalaurScale_Bind.png", grade: "Unique", type: "material" },
   "強固的龍族鱗片":         { image: "images/materials/SolidBalaurScale.png", grade: "Unique", type: "material" },
-  "強結的龍族皮革(刻印)":   { image: "images/materials/FirmBalaurLeather_Bind.png", grade: "Unique", type: "material" },
+  "強結的龍族皮革":   { image: "images/materials/FirmBalaurLeather_Bind.png", grade: "Unique", type: "material" },
   "強結的龍族皮革":         { image: "images/materials/FirmBalaurLeather.png", grade: "Unique", type: "material" },
-  "強結的龍族角(刻印)":     { image: "images/materials/FirmBalaurHorn_Bind.png", grade: "Unique", type: "material" },
+  "強結的龍族角":     { image: "images/materials/FirmBalaurHorn_Bind.png", grade: "Unique", type: "material" },
   "強結的龍族角":           { image: "images/materials/FirmBalaurHorn.png", grade: "Unique", type: "material" },
-  "強結的龍族鱗片(刻印)":   { image: "images/materials/FirmBalaurScale_Bind.png", grade: "Unique", type: "material" },
+  "強結的龍族鱗片":   { image: "images/materials/FirmBalaurScale_Bind.png", grade: "Unique", type: "material" },
   "強結的龍族鱗片":         { image: "images/materials/FirmBalaurScale.png", grade: "Unique", type: "material" },
 
   // 暫無圖片的材料（使用預設）
@@ -173,7 +173,7 @@ const ITEMS = {
   "達人閃耀的奧里哈康法杖": { image: null, grade: "Epic", type: "material" },
   "達人閃耀的奧里哈康臂甲": { image: null, grade: "Epic", type: "material" },
   "燦爛的奧里哈康礦石":     { image: null, grade: "Unique", type: "material" },
-  "燦爛的奧德(刻印)":       { image: null, grade: "Unique", type: "material" },
+  "燦爛的奧德":       { image: null, grade: "Unique", type: "material" },
 };
 
 /**
@@ -195,8 +195,8 @@ const WEAPON_SUBTYPES = {
  * 品級色彩映射
  */
 const GRADE_COLORS = {
-  "Epic":   "#ffd700",
-  "Unique": "#b366ff",
+  "Epic":   "#ffa500", // 英雄 (橘色)
+  "Unique": "#ffa500", // 獨特 (黃色)
   "Rare":   "#4d9fff",
   "Normal": "#cccccc"
 };
