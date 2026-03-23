@@ -1,7 +1,7 @@
-$css = Get-Content 'nca2-craft-tool\css\style.css' -Raw
-$items = Get-Content 'nca2-craft-tool\js\items.js' -Raw
-$recipes = Get-Content 'nca2-craft-tool\js\recipes.js' -Raw
-$app = Get-Content 'app_series_cart.js' -Raw
+$css = Get-Content 'nca2-craft-tool\css\style.css' -Raw -Encoding UTF8
+$items = Get-Content 'nca2-craft-tool\js\items.js' -Raw -Encoding UTF8
+$recipes = Get-Content 'nca2-craft-tool\js\recipes.js' -Raw -Encoding UTF8
+$app = Get-Content 'app_series_cart.js' -Raw -Encoding UTF8
 
 $html = @"
 <!DOCTYPE html>
@@ -50,6 +50,7 @@ $css
             <h2>裝備系列選單 (點擊開始配置)</h2>
           </div>
           <!-- 隱藏無用的分類，改為純粹展現系列 -->
+          <div class="filter-tabs" id="filter-tabs" style="display:none;"></div>
           <div class="equipment-list" id="equipment-list"></div>
         </div>
       </aside>
