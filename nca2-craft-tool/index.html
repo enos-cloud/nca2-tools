@@ -7,6 +7,860 @@
   <meta name="description" content="AION2 瘞豢?蝝?? 鋆?鋆賭??閮?????靘鋆?蝟餃???嚗?游?隞嗉?????雿菔?蝞?>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>??</text></svg>">
   <style>
+/* ============================================================
+   AION2 鋆?鋆賭??閮???????銝駁?
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap');
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  --bg-primary: #060a14;
+  --bg-secondary: #0c1222;
+  --bg-card: rgba(14, 22, 42, 0.85);
+  --bg-card-hover: rgba(20, 30, 56, 0.95);
+  --bg-input: rgba(10, 16, 30, 0.9);
+  --border-glow: rgba(100, 160, 255, 0.15);
+  --border-dim: rgba(60, 80, 120, 0.3);
+  --text-primary: #e8ecf4;
+  --text-secondary: #8b9cc0;
+  --text-dim: #556080;
+  --accent-blue: #4d9fff;
+  --accent-cyan: #00d4ff;
+  --accent-gold: #ffd700;
+  --accent-purple: #b366ff;
+  --accent-red: #ff4d6a;
+  --grade-epic: #ffd700;
+  --grade-unique: #b366ff;
+  --grade-rare: #4d9fff;
+  --glass-bg: rgba(16, 24, 48, 0.7);
+  --glass-border: rgba(100, 160, 255, 0.1);
+  --shadow-glow: 0 0 30px rgba(77, 159, 255, 0.08);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ?典??蝎??? */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(77, 159, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(179, 102, 255, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.02) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(6, 10, 20, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 32px;
+}
+
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--bg-primary);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.logo-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #fff 30%, var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.header-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- Main Layout ---------- */
+.main-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 32px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ---------- Sidebar (撌血鋆??豢??Ｘ) ---------- */
+.sidebar {
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(77, 159, 255, 0.3) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(77, 159, 255, 0.3);
+  border-radius: 4px;
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-dim);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.panel-header .icon {
+  font-size: 18px;
+}
+
+/* 甇血憿?蝭拚 */
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.filter-tab {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(30, 40, 70, 0.5);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  color: var(--accent-cyan);
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.08);
+}
+
+.filter-tab.active {
+  color: var(--bg-primary);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+}
+
+/* 鋆??” */
+.equipment-list {
+  padding: 8px;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.equipment-item:hover {
+  background: rgba(77, 159, 255, 0.06);
+  border-color: rgba(77, 159, 255, 0.12);
+}
+
+.equipment-item.selected {
+  background: rgba(77, 159, 255, 0.1);
+  border-color: rgba(77, 159, 255, 0.25);
+  box-shadow: inset 0 0 20px rgba(77, 159, 255, 0.05);
+}
+
+.equipment-item .item-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  border: 2px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.equipment-item .item-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.equipment-item .item-icon.grade-epic {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+}
+
+.equipment-item .item-icon.grade-unique {
+  border-color: rgba(179, 102, 255, 0.5);
+  box-shadow: 0 0 8px rgba(179, 102, 255, 0.15);
+}
+
+.equipment-item .item-name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.equipment-item .item-name.epic {
+  color: var(--grade-epic);
+}
+
+.equipment-item .item-name.unique {
+  color: var(--grade-unique);
+}
+
+.equipment-item .item-category {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ---------- 銝餉??批捆? (?喳) ---------- */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 鋆?閰單??∠? */
+.equipment-detail {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.equipment-detail::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.03) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.equip-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.equip-image-frame {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(20, 28, 50, 0.9) 0%, rgba(10, 14, 26, 0.95) 70%);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 
+    0 0 40px rgba(255, 215, 0, 0.08),
+    inset 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.equip-image-frame::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  animation: orbit-pulse 4s ease-in-out infinite;
+}
+
+@keyframes orbit-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.02); }
+}
+
+.equip-image-frame img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 20px rgba(255, 215, 0, 0.2));
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.equip-image-frame:hover img {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.equip-name {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.equip-name.epic {
+  color: var(--grade-epic);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.equip-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.equip-grade-badge.epic {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 170, 0, 0.1));
+  color: var(--grade-epic);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+/* ?????*/
+.equip-materials {
+  position: relative;
+  z-index: 1;
+}
+
+.equip-materials h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- ??皜 ---------- */
+.materials-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.material-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 80px 160px 140px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(12, 18, 34, 0.6);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.material-row:hover {
+  border-color: rgba(100, 160, 255, 0.2);
+  background: rgba(16, 24, 46, 0.7);
+}
+
+.material-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.material-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.material-icon.grade-epic {
+  border-color: rgba(255, 215, 0, 0.4);
+}
+.material-icon.grade-unique {
+  border-color: rgba(179, 102, 255, 0.4);
+}
+
+.material-info {
+  min-width: 0;
+}
+
+.material-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.material-name.epic { color: var(--grade-epic); }
+.material-name.unique { color: var(--grade-unique); }
+
+.material-qty {
+  font-size: 13px;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-align: center;
+}
+
+.material-qty span {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ?寞頛詨 */
+.price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.price-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px 0 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: 'Noto Sans TC', sans-serif;
+  transition: var(--transition);
+  outline: none;
+}
+
+.price-input::placeholder {
+  color: var(--text-dim);
+}
+
+.price-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(77, 159, 255, 0.1);
+}
+
+.price-currency {
+  position: absolute;
+  left: 10px;
+  font-size: 12px;
+  color: var(--accent-gold);
+  pointer-events: none;
+}
+
+/* 撠? */
+.material-subtotal {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.material-subtotal.has-value {
+  color: var(--accent-gold);
+}
+
+/* ---------- 蝮賣??砍蝮?---------- */
+.cost-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.cost-summary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), var(--accent-cyan), transparent);
+  opacity: 0.6;
+}
+
+.cost-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cost-label h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.cost-label p {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.cost-total {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cost-amount {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-gold), #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+
+.cost-currency {
+  font-size: 16px;
+  color: var(--accent-gold);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* ???? */
+.cost-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Sans TC', sans-serif;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  color: var(--bg-primary);
+  box-shadow: 0 4px 16px rgba(77, 159, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(77, 159, 255, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(30, 40, 70, 0.6);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-dim);
+}
+
+.btn-secondary:hover {
+  color: var(--accent-cyan);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+/* ---------- 蝛箇???---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.empty-state .icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 360px;
+}
+
+/* ---------- ?身??? ---------- */
+.default-item-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(30, 40, 70, 0.8), rgba(20, 28, 50, 0.9));
+  font-size: 20px;
+  color: var(--text-dim);
+}
+
+/* ---------- ?踵?撘?撅 ---------- */
+@media (max-width: 1100px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+
+  .equipment-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .equip-preview {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .equip-image-frame {
+    width: 140px;
+    height: 140px;
+  }
+
+  .material-row {
+    grid-template-columns: 40px 1fr 60px 120px auto;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .header-inner {
+    height: 56px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .header-info {
+    display: none;
+  }
+
+  .main-container {
+    padding: 16px;
+  }
+
+  .equipment-detail {
+    padding: 20px;
+  }
+
+  .equip-preview {
+    flex-direction: column;
+  }
+
+  .material-row {
+    grid-template-columns: 40px 1fr;
+    gap: 6px;
+  }
+
+  .material-qty,
+  .price-input-wrapper,
+  .material-subtotal {
+    grid-column: 2;
+  }
+
+  .cost-summary {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .cost-amount {
+    font-size: 28px;
+  }
+}
+
+/* ---------- ? ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ---------- 撌亙?內 ---------- */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(20, 28, 50, 0.95);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 10;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
 
 .cart-item { display: flex; align-items: center; justify-content: space-between; background: rgba(12,18,34,0.6); border: 1px solid var(--border-dim); padding: 10px; border-radius: 8px; margin-bottom: 8px; transition: all 0.3s; }
 .cart-item:hover { border-color: rgba(100,160,255,0.4); background: rgba(16,24,46,0.8); }
@@ -91,8 +945,503 @@
 
   <script>
 // ---------- 鞈?頛? ----------
+/**
+ * AION2 ??迂???楝敺?撠?
+ * ??頝臬??詨??澆?獢?桅?
+ */
+const ITEMS = {
+  // ========== 甇血 ==========
+  // 撌典? (Greatsword)
+  "???楊??:     { image: "images/weapons/Greatsword/???楊??png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "憭??楊??:     { image: "images/weapons/Greatsword/憭??楊??png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "???樴?撌典?": { image: "images/weapons/Greatsword/???樴?撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "???樴?撌典?": { image: "images/weapons/Greatsword/???樴?撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "???貊?撌典?":   { image: "images/weapons/Greatsword/???貊?撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "憭??貊?撌典?":   { image: "images/weapons/Greatsword/憭??貊?撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "???樴?楊??: { image: "images/weapons/Greatsword/???樴?楊??png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "???樴?楊??: { image: "images/weapons/Greatsword/???樴?楊??png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "?批噸??皛?":   { image: "images/weapons/Greatsword/?批噸??皛?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "摰????撌典?": { image: "images/weapons/Greatsword/摰????撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "?瑟摰??撌典?": { image: "images/weapons/Greatsword/?瑟摰??撌典?.png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+  "鋡思噩???舫???憌楊??: { image: "images/weapons/Greatsword/鋡思噩???舫???憌楊??png", grade: "Epic", type: "weapon", subtype: "Greatsword" },
+
+  // ?瑕? (Sword)
+  "?????:     { image: "images/weapons/Sword/?????png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "憭????:     { image: "images/weapons/Sword/憭????png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "???樴??瑕?": { image: "images/weapons/Sword/???樴??瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "???樴??瑕?": { image: "images/weapons/Sword/???樴??瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "???貊??瑕?":   { image: "images/weapons/Sword/???貊??瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "憭??貊??瑕?":   { image: "images/weapons/Sword/憭??貊??瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "???樴???: { image: "images/weapons/Sword/???樴???png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "???樴???: { image: "images/weapons/Sword/???樴???png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "?批噸????":   { image: "images/weapons/Sword/?批噸????.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "摰?????瑕?": { image: "images/weapons/Sword/摰?????瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "?瑟摰???瑕?": { image: "images/weapons/Sword/?瑟摰???瑕?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+  "鋡思噩???舫???勗?": { image: "images/weapons/Sword/鋡思噩???舫???勗?.png", grade: "Epic", type: "weapon", subtype: "Sword" },
+
+  // ?剖? (Dagger)
+  "?????:     { image: "images/weapons/Dagger/?????png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "憭????:     { image: "images/weapons/Dagger/憭????png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "???樴??剖?": { image: "images/weapons/Dagger/???樴??剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "???樴??剖?": { image: "images/weapons/Dagger/???樴??剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "???貊??剖?":   { image: "images/weapons/Dagger/???貊??剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "憭??貊??剖?":   { image: "images/weapons/Dagger/憭??貊??剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "???樴???: { image: "images/weapons/Dagger/???樴???png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "???樴???: { image: "images/weapons/Dagger/???樴???png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "?批噸???:     { image: "images/weapons/Dagger/?批噸???png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "摰?????剖?": { image: "images/weapons/Dagger/摰?????剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "?瑟摰???剖?": { image: "images/weapons/Dagger/?瑟摰???剖?.png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+  "鋡思噩???舫????: { image: "images/weapons/Dagger/鋡思噩???舫????png", grade: "Epic", type: "weapon", subtype: "Dagger" },
+
+  // 撘?(Bow)
+  "????":       { image: "images/weapons/Bow/????.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "憭???":       { image: "images/weapons/Bow/憭???.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "???樴?撘?:   { image: "images/weapons/Bow/???樴?撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "???樴?撘?:   { image: "images/weapons/Bow/???樴?撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "???貊?撘?:     { image: "images/weapons/Bow/???貊?撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "憭??貊?撘?:     { image: "images/weapons/Bow/憭??貊?撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "???樴??": { image: "images/weapons/Bow/???樴??.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "???樴??": { image: "images/weapons/Bow/???樴??.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "?批噸???賢?":   { image: "images/weapons/Bow/?批噸???賢?.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "摰????撘?:   { image: "images/weapons/Bow/摰????撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "?瑟摰??撘?:   { image: "images/weapons/Bow/?瑟摰??撘?png", grade: "Epic", type: "weapon", subtype: "Bow" },
+  "鋡思噩???舫???勗?": { image: "images/weapons/Bow/鋡思噩???舫???勗?.png", grade: "Epic", type: "weapon", subtype: "Bow" },
+
+  // 擳???(Magicbook)
+  "????瘜":    { image: "images/weapons/Magicbook/????瘜.png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "憭???瘜":    { image: "images/weapons/Magicbook/憭???瘜.png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "???樴?擳???: { image: "images/weapons/Magicbook/???樴?擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "???樴?擳???: { image: "images/weapons/Magicbook/???樴?擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "???貊?擳???:  { image: "images/weapons/Magicbook/???貊?擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "憭??貊?擳???:  { image: "images/weapons/Magicbook/憭??貊?擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "???樴??瘜": { image: "images/weapons/Magicbook/???樴??瘜.png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "???樴??瘜": { image: "images/weapons/Magicbook/???樴??瘜.png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "?批噸????:     { image: "images/weapons/Magicbook/?批噸????png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "摰????擳???: { image: "images/weapons/Magicbook/摰????擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "?瑟摰??擳???: { image: "images/weapons/Magicbook/?瑟摰??擳???png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+  "鋡思噩???舫?????: { image: "images/weapons/Magicbook/鋡思噩???舫?????png", grade: "Epic", type: "weapon", subtype: "Magicbook" },
+
+  // 瘜? (Orb)
+  "??????:     { image: "images/weapons/Orb/??????png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "憭?????:     { image: "images/weapons/Orb/憭?????png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "???樴?瘜?": { image: "images/weapons/Orb/???樴?瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "???樴?瘜?": { image: "images/weapons/Orb/???樴?瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "???貊?瘜?":   { image: "images/weapons/Orb/???貊?瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "憭??貊?瘜?":   { image: "images/weapons/Orb/憭??貊?瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "???樴????: { image: "images/weapons/Orb/???樴????png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "???樴????: { image: "images/weapons/Orb/???樴????png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "?批噸?楛瘛萇?":   { image: "images/weapons/Orb/?批噸?楛瘛萇?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "摰????瘜?": { image: "images/weapons/Orb/摰????瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "?瑟摰??瘜?": { image: "images/weapons/Orb/?瑟摰??瘜?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+  "鋡思噩???舫????啁?": { image: "images/weapons/Orb/鋡思噩???舫????啁?.png", grade: "Epic", type: "weapon", subtype: "Orb" },
+
+  // ?? (Mace)
+  "??????:     { image: "images/weapons/Mace/??????png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "憭?????:     { image: "images/weapons/Mace/憭?????png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "???樴???": { image: "images/weapons/Mace/???樴???.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "???樴???": { image: "images/weapons/Mace/???樴???.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "???貊???":   { image: "images/weapons/Mace/???貊???.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "憭??貊???":   { image: "images/weapons/Mace/憭??貊???.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "???樴????: { image: "images/weapons/Mace/???樴????png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "???樴????: { image: "images/weapons/Mace/???樴????png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "?批噸????:     { image: "images/weapons/Mace/?批噸????png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "摰??????": { image: "images/weapons/Mace/摰??????.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "?瑟摰????": { image: "images/weapons/Mace/?瑟摰????.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+  "鋡思噩???舫??竣?梢?": { image: "images/weapons/Mace/鋡思噩???舫??竣?梢?.png", grade: "Epic", type: "weapon", subtype: "Mace" },
+
+  // 瘜? (Staff)
+  "??????:     { image: "images/weapons/Staff/??????png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "憭?????:     { image: "images/weapons/Staff/憭?????png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "???樴?瘜?": { image: "images/weapons/Staff/???樴?瘜?.png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "???樴?瘜?": { image: "images/weapons/Staff/???樴?瘜?.png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "???貊?瘜?":   { image: "images/weapons/Staff/???貊?瘜?.png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "憭??貊?瘜?":   { image: "images/weapons/Staff/憭??貊?瘜?.png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "???樴????: { image: "images/weapons/Staff/???樴????png", grade: "Epic", type: "weapon", subtype: "Staff" },
+  "???樴????: { image: "images/weapons/Staff/???樴????png", grade: "Epic", type: "weapon", subtype: "Staff" },
+
+  // ? (Guarder)
+  "??????:     { image: "images/weapons/Guarder/??????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "憭?????:     { image: "images/weapons/Guarder/憭?????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "???樴??": { image: "images/weapons/Guarder/???樴??.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "???樴??": { image: "images/weapons/Guarder/???樴??.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "???貊??":   { image: "images/weapons/Guarder/???貊??.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "憭??貊??":   { image: "images/weapons/Guarder/憭??貊??.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "???樴????: { image: "images/weapons/Guarder/???樴????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "???樴????: { image: "images/weapons/Guarder/???樴????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "?批噸????:     { image: "images/weapons/Guarder/?批噸????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "摰?????": { image: "images/weapons/Guarder/摰?????.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "?瑟摰???": { image: "images/weapons/Guarder/?瑟摰???.png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+  "鋡思噩???舫?????: { image: "images/weapons/Guarder/鋡思噩???舫?????png", grade: "Epic", type: "weapon", subtype: "Guarder" },
+
+  // ========== 鋆賭??? ==========
+  "?犖?銝??????餃)": { image: "images/materials/?犖?銝??????餃).png", grade: "Unique", type: "material" },
+  "?犖?銝?????:       { image: "images/materials/?犖?銝?????png", grade: "Unique", type: "material" },
+  "???撥?粹???":       { image: "images/materials/???撥?粹???.png", grade: "Unique", type: "material" },
+  "???撥蝯???":       { image: "images/materials/???撥蝯???.png", grade: "Unique", type: "material" },
+  "??ˊ?撥?粹????:     { image: "images/materials/??ˊ?撥?粹????png", grade: "Unique", type: "material" },
+  "??ˊ?撥蝯????:     { image: "images/materials/??ˊ?撥蝯????png", grade: "Unique", type: "material" },
+  "撘瑕??撥?粹?????:     { image: "images/materials/撘瑕??撥?粹?????png", grade: "Unique", type: "material" },
+  "撘瑕??撥蝯?????:     { image: "images/materials/撘瑕??撥蝯?????png", grade: "Unique", type: "material" },
+  "?斗艙(?餃)":         { image: "images/materials/?斗艙(?餃).png", grade: "Unique", type: "material" },
+  "?斗艙":               { image: "images/materials/?斗艙.png", grade: "Unique", type: "material" },
+  "?斗?敹??餃)":         { image: "images/materials/?斗?敹??餃).png", grade: "Unique", type: "material" },
+  "?斗?敹?:               { image: "images/materials/?斗?敹?png", grade: "Unique", type: "material" },
+  "?斗???餃)":         { image: "images/materials/?斗???餃).png", grade: "Unique", type: "material" },
+  "?斗??:               { image: "images/materials/?斗??png", grade: "Unique", type: "material" },
+  "?斗????餃)":         { image: "images/materials/?斗????餃).png", grade: "Unique", type: "material" },
+  "?斗???:               { image: "images/materials/?斗???png", grade: "Unique", type: "material" },
+  "?斗????餃)":         { image: "images/materials/?斗????餃).png", grade: "Unique", type: "material" },
+  "?斗???:               { image: "images/materials/?斗???png", grade: "Unique", type: "material" },
+  "?潛???楞???餃)":   { image: "images/materials/?潛???楞???餃).png", grade: "Epic", type: "material" },
+  "?潛???楞??:         { image: "images/materials/?潛???楞??png", grade: "Epic", type: "material" },
+  "?潛????銵(?餃)":   { image: "images/materials/?潛????銵(?餃).png", grade: "Epic", type: "material" },
+  "?潛????銵":         { image: "images/materials/?潛????銵.png", grade: "Epic", type: "material" },
+  "撘瑕??????餃)":   { image: "images/materials/撘瑕??????餃).png", grade: "Unique", type: "material" },
+  "撘瑕?????:         { image: "images/materials/撘瑕?????png", grade: "Unique", type: "material" },
+  "撘瑕????(?餃)":     { image: "images/materials/撘瑕????(?餃).png", grade: "Unique", type: "material" },
+  "撘瑕????":           { image: "images/materials/撘瑕????.png", grade: "Unique", type: "material" },
+  "撘瑕???????餃)":   { image: "images/materials/撘瑕???????餃).png", grade: "Unique", type: "material" },
+  "撘瑕??????:         { image: "images/materials/撘瑕??????png", grade: "Unique", type: "material" },
+  "撘瑞???????餃)":   { image: "images/materials/撘瑞???????餃).png", grade: "Unique", type: "material" },
+  "撘瑞??????:         { image: "images/materials/撘瑞??????png", grade: "Unique", type: "material" },
+  "撘瑞?????(?餃)":     { image: "images/materials/撘瑞?????(?餃).png", grade: "Unique", type: "material" },
+  "撘瑞?????":           { image: "images/materials/撘瑞?????.png", grade: "Unique", type: "material" },
+  "撘瑞????????餃)":   { image: "images/materials/撘瑞????????餃).png", grade: "Unique", type: "material" },
+  "撘瑞???????:         { image: "images/materials/撘瑞???????png", grade: "Unique", type: "material" },
+
+  // ?怎??????雿輻?身嚗?
+  "?犖??尼??摨瑕楊??: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨琿??: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨瑞??: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨瑕?":   { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨琿?瘜": { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨瑟???: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨琿???: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨瑟???: { image: null, grade: "Epic", type: "material" },
+  "?犖??尼??摨瑁???: { image: null, grade: "Epic", type: "material" },
+  "?衣??尼??摨瑞丹??:     { image: null, grade: "Unique", type: "material" },
+  "?衣??尼敺??餃)":       { image: null, grade: "Unique", type: "material" },
+};
+
+/**
+ * 甇血摮?憿?銝剜???撠?
+ */
+const WEAPON_SUBTYPES = {
+  "Greatsword": "撌典?",
+  "Sword":      "?瑕?",
+  "Dagger":     "?剖?",
+  "Bow":        "撘?,
+  "Magicbook":  "擳???,
+  "Orb":        "瘜?",
+  "Mace":       "??",
+  "Staff":      "瘜?",
+  "Guarder":    "?"
+};
+
+/**
+ * ???脣蔗??
+ */
+const GRADE_COLORS = {
+  "Epic":   "#ffd700",
+  "Unique": "#b366ff",
+  "Rare":   "#4d9fff",
+  "Normal": "#cccccc"
+};
 
 
+/**
+ * AION2 鋆?鋆賭??鞈?
+ * ?瘥鋆賭?鋆??????株??賊?
+ */
+const RECIPES = {
+  // ==================== 撌典? (Greatsword) ====================
+  "憭??楊??: {
+    grade: "Epic",
+    category: "Greatsword",
+    materials: [
+      { name: "?犖??尼??摨瑕楊??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛???楞??, qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+  "???楊??: {
+    grade: "Epic",
+    category: "Greatsword",
+    materials: [
+      { name: "?犖??尼??摨瑕楊??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛????銵", qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+
+  // ==================== ?瑕? (Sword) ====================
+  "憭????: {
+    grade: "Epic",
+    category: "Sword",
+    materials: [
+      { name: "?犖??尼??摨琿??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "?????: {
+    grade: "Epic",
+    category: "Sword",
+    materials: [
+      { name: "?犖??尼??摨琿??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+
+  // ==================== ?剖? (Dagger) ====================
+  "憭????: {
+    grade: "Epic",
+    category: "Dagger",
+    materials: [
+      { name: "?犖??尼??摨瑞??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "?????: {
+    grade: "Epic",
+    category: "Dagger",
+    materials: [
+      { name: "?犖??尼??摨瑞??, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+
+  // ==================== 撘?(Bow) ====================
+  "憭???": {
+    grade: "Epic",
+    category: "Bow",
+    materials: [
+      { name: "?犖??尼??摨瑕?", qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛???楞??, qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+  "????": {
+    grade: "Epic",
+    category: "Bow",
+    materials: [
+      { name: "?犖??尼??摨瑕?", qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛????銵", qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+
+  // ==================== 擳???(Magicbook) ====================
+  "憭???瘜": {
+    grade: "Epic",
+    category: "Magicbook",
+    materials: [
+      { name: "?犖??尼??摨琿?瘜", qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "????瘜": {
+    grade: "Epic",
+    category: "Magicbook",
+    materials: [
+      { name: "?犖??尼??摨琿?瘜", qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+
+  // ==================== 瘜? (Orb) ====================
+  "憭?????: {
+    grade: "Epic",
+    category: "Orb",
+    materials: [
+      { name: "?犖??尼??摨瑟???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "??????: {
+    grade: "Epic",
+    category: "Orb",
+    materials: [
+      { name: "?犖??尼??摨瑟???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+
+  // ==================== ?? (Mace) ====================
+  "憭?????: {
+    grade: "Epic",
+    category: "Mace",
+    materials: [
+      { name: "?犖??尼??摨琿???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "??????: {
+    grade: "Epic",
+    category: "Mace",
+    materials: [
+      { name: "?犖??尼??摨琿???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+
+  // ==================== 瘜? (Staff) ====================
+  "憭?????: {
+    grade: "Epic",
+    category: "Staff",
+    materials: [
+      { name: "?犖??尼??摨瑟???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛???楞??, qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+  "??????: {
+    grade: "Epic",
+    category: "Staff",
+    materials: [
+      { name: "?犖??尼??摨瑟???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 122 },
+      { name: "?斗艙(?餃)", qty: 18 },
+      { name: "?斗?敹??餃)", qty: 27 },
+      { name: "?斗???餃)", qty: 42 },
+      { name: "?潛????銵", qty: 19 },
+      { name: "?衣??尼??摨瑞丹??, qty: 121 },
+      { name: "?衣??尼敺??餃)", qty: 70 }
+    ]
+  },
+
+  // ==================== ? (Guarder) ====================
+  "憭?????: {
+    grade: "Epic",
+    category: "Guarder",
+    materials: [
+      { name: "?犖??尼??摨瑁???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥?粹???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛???楞??, qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  },
+  "??????: {
+    grade: "Epic",
+    category: "Guarder",
+    materials: [
+      { name: "?犖??尼??摨瑁???, qty: 5 },
+      { name: "?犖?銝??????餃)", qty: 50 },
+      { name: "???撥蝯???", qty: 98 },
+      { name: "?斗艙(?餃)", qty: 14 },
+      { name: "?斗?敹??餃)", qty: 22 },
+      { name: "?斗???餃)", qty: 34 },
+      { name: "?潛????銵", qty: 15 },
+      { name: "?衣??尼??摨瑞丹??, qty: 97 },
+      { name: "?衣??尼敺??餃)", qty: 56 }
+    ]
+  }
+};
 
 
 // ---------- ?摩?瑁?? ----------
