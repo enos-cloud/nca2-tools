@@ -41,9 +41,14 @@ css = css.replace('--grade-unique: #b366ff;', '--grade-unique: #ffd700;')
 
 # 3. 處理圖片英文化 (同 rename.py)
 TRANSLATE = {
-    "應龍王": "YinglongKing", "夔龍王": "KuirongKing", "閃耀的": "Shining",
-    "應龍霸王": "YinglongEmperor", "夔龍霸王": "KuirongEmperor", "盧德萊": "Rudra",
-    "守衛者軍團長": "GuardianBG", "執政官軍團長": "ArchonBG", "被侵蝕的支配者": "ErodedDominator",
+  "閃耀的應龍霸王": "ShiningYinglongEmperor", "閃耀的夔龍霸王": "ShiningKuirongEmperor",
+  "閃耀的應龍王": "ShiningYinglongKing", "閃耀的夔龍王": "ShiningKuirongKing",
+  "應龍霸王": "YinglongEmperor", "夔龍霸王": "KuirongEmperor", "應龍王": "YinglongKing", "夔龍王": "KuirongKing",
+  "古代精靈": "AncientSpirit", "被侵蝕的殘影": "ErodedShadow", "盧德萊": "Rudra",
+  "守衛者軍團長": "GuardianBG", "執政官軍團長": "ArchonBG", "被侵蝕的支配者": "ErodedDominator",
+  "頭盔": "Helmet", "胸甲": "Torso", "腿甲": "Pants", "手套": "Gloves", "長靴": "Boots",
+  "肩甲": "Shoulder", "披風": "Cape", "戒指": "Ring", "耳環": "Earring", "項鍊": "Necklace", "手鐲": "Bracelet",
+  "閃耀的": "Shining",
     "巨劍": "Greatsword", "長劍": "Sword", "短劍": "Dagger", "弓": "Bow",
     "魔法書": "Spellbook", "法珠": "Orb", "釘錘": "Mace", "法杖": "Staff", "臂甲": "Guarder",
     "絕滅刀": "Greatsword", "鱗片劍": "Sword", "腳爪": "Dagger", "絕命弓": "Bow",

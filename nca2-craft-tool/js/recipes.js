@@ -104,14 +104,14 @@ const RECIPES = {
     grade: "Epic",
     category: "Bow",
     materials: [
-      { name: "達人閃耀的奧里哈康弓", qty: 5 },
+      { name: "達人閃耀的菩提弓", qty: 5 },
       { name: "達人最上級提煉石", qty: 50 },
-      { name: "提煉的強固龍族角", qty: 122 },
+      { name: "強化的強固龍族鱗片", qty: 122 },
       { name: "憤怒思念", qty: 18 },
       { name: "憤怒意志", qty: 27 },
       { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒巫蠱", qty: 19 },
-      { name: "燦爛的奧里哈康礦石", qty: 121 },
+      { name: "燦爛的菩提木頭", qty: 121 },
       { name: "燦爛的奧德", qty: 70 }
     ]
   },
@@ -119,14 +119,14 @@ const RECIPES = {
     grade: "Epic",
     category: "Bow",
     materials: [
-      { name: "達人閃耀的奧里哈康弓", qty: 5 },
+      { name: "達人閃耀的菩提弓", qty: 5 },
       { name: "達人最上級提煉石", qty: 50 },
-      { name: "提煉的強結龍族角", qty: 122 },
+      { name: "強化的強固龍族鱗片", qty: 122 },
       { name: "憤怒思念", qty: 18 },
       { name: "憤怒意志", qty: 27 },
       { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒心血", qty: 19 },
-      { name: "燦爛的奧里哈康礦石", qty: 121 },
+      { name: "燦爛的菩提木頭", qty: 121 },
       { name: "燦爛的奧德", qty: 70 }
     ]
   },
@@ -232,14 +232,14 @@ const RECIPES = {
     grade: "Epic",
     category: "Staff",
     materials: [
-      { name: "達人閃耀的奧里哈康法杖", qty: 5 },
+      { name: "達人閃耀的菩提法杖", qty: 5 },
       { name: "達人最上級提煉石", qty: 50 },
-      { name: "提煉的強固龍族角", qty: 122 },
+      { name: "強化的強固龍族鱗片", qty: 122 },
       { name: "憤怒思念", qty: 18 },
       { name: "憤怒意志", qty: 27 },
       { name: "憤怒自我", qty: 42 },
       { name: "發狂的憤怒巫蠱", qty: 19 },
-      { name: "燦爛的奧里哈康礦石", qty: 121 },
+      { name: "燦爛的菩提木頭", qty: 121 },
       { name: "燦爛的奧德", qty: 70 }
     ]
   },
@@ -247,14 +247,14 @@ const RECIPES = {
     grade: "Epic",
     category: "Staff",
     materials: [
-      { name: "達人閃耀的奧里哈康法杖", qty: 5 },
+      { name: "達人閃耀的菩提法杖", qty: 5 },
       { name: "達人最上級提煉石", qty: 50 },
-      { name: "提煉的強結龍族角", qty: 122 },
+      { name: "強化的強固龍族鱗片", qty: 122 },
       { name: "憤怒思念", qty: 18 },
       { name: "憤怒意志", qty: 27 },
       { name: "憤怒自我", qty: 42 },
-      { name: "發狂的憤怒心血", qty: 19 },
-      { name: "燦爛的奧里哈康礦石", qty: 121 },
+      { name: "發狂的憤怒巫蠱", qty: 19 },
+      { name: "燦爛的菩提木頭", qty: 121 },
       { name: "燦爛的奧德", qty: 70 }
     ]
   },
@@ -291,3 +291,130 @@ const RECIPES = {
     ]
   }
 };
+
+Object.keys(RECIPES).forEach(name => {
+  if (!name.startsWith("應龍王") && !name.startsWith("夔龍王")) {
+    delete RECIPES[name];
+  }
+});
+
+const ARMOR_RECIPE_SERIES_NAMES = [
+  "應龍王",
+  "夔龍王",
+];
+
+const ARMOR_SLOT_CONFIGS = {
+  Helmet: {
+    suffix: "頭盔",
+    refinerQty: 21,
+    supportMaterial: "鞣製的強固龍族皮革",
+    supportQty: 51,
+    thoughtQty: 7,
+    willQty: 12,
+    selfQty: 17,
+    rageQty: 8,
+    oreQty: 51,
+    odQty: 29
+  },
+  Torso: {
+    suffix: "胸甲",
+    refinerQty: 33,
+    supportMaterial: "鞣製的強固龍族皮革",
+    supportQty: 81,
+    thoughtQty: 12,
+    willQty: 18,
+    selfQty: 28,
+    rageQty: 13,
+    oreQty: 81,
+    odQty: 47
+  },
+  Pants: {
+    suffix: "腿甲",
+    refinerQty: 25,
+    supportMaterial: "鞣製的強固龍族鱗片",
+    supportQty: 61,
+    thoughtQty: 9,
+    willQty: 14,
+    selfQty: 21,
+    rageQty: 10,
+    oreQty: 61,
+    odQty: 35
+  },
+  Gloves: {
+    suffix: "手套",
+    refinerQty: 17,
+    supportMaterial: "鞣製的強固龍族鱗片",
+    supportQty: 41,
+    thoughtQty: 6,
+    willQty: 10,
+    selfQty: 14,
+    rageQty: 6,
+    oreQty: 41,
+    odQty: 23
+  },
+  Boots: {
+    suffix: "長靴",
+    refinerQty: 21,
+    supportMaterial: "鞣製的強固龍族皮革",
+    supportQty: 51,
+    thoughtQty: 7,
+    willQty: 13,
+    selfQty: 18,
+    rageQty: 8,
+    oreQty: 51,
+    odQty: 29
+  },
+  Shoulder: {
+    suffix: "肩甲",
+    refinerQty: 17,
+    supportMaterial: "鞣製的強固龍族鱗片",
+    supportQty: 41,
+    thoughtQty: 6,
+    willQty: 10,
+    selfQty: 14,
+    rageQty: 6,
+    oreQty: 41,
+    odQty: 23
+  },
+  Cape: {
+    suffix: "披風",
+    refinerQty: 17,
+    supportMaterial: "鞣製的強固龍族皮革",
+    supportQty: 41,
+    thoughtQty: 6,
+    willQty: 10,
+    selfQty: 14,
+    rageQty: 6,
+    oreQty: 41,
+    odQty: 23
+  }
+};
+
+function getArmorRageMaterial(seriesName) {
+  return seriesName.includes("應龍") ? "發狂的憤怒心血" : "發狂的憤怒巫蠱";
+}
+
+function addArmorRecipe(target, seriesName, slotKey, config) {
+  const itemName = `${seriesName}${config.suffix}`;
+  target[itemName] = {
+    grade: "Epic",
+    category: slotKey,
+    materials: [
+      { name: `達人閃耀的奧里哈康${config.suffix}`, qty: 5 },
+      { name: "達人最上級提煉石", qty: config.refinerQty },
+      { name: config.supportMaterial, qty: config.supportQty },
+      { name: "憤怒思念", qty: config.thoughtQty },
+      { name: "憤怒意志", qty: config.willQty },
+      { name: "憤怒自我", qty: config.selfQty },
+      { name: getArmorRageMaterial(seriesName), qty: config.rageQty },
+      { name: "燦爛的奧里哈康礦石", qty: config.oreQty },
+      { name: "燦爛的奧德", qty: config.odQty }
+    ]
+  };
+}
+
+ARMOR_RECIPE_SERIES_NAMES.forEach(seriesName => {
+  Object.entries(ARMOR_SLOT_CONFIGS).forEach(([slotKey, config]) => {
+    addArmorRecipe(RECIPES, seriesName, slotKey, config);
+  });
+});

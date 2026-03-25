@@ -2,8 +2,9 @@
  * 新版 AION2 裝備製作成本計算器 (系列化購物車模式)
  */
 
-const SERIES_NAMES = ["應龍王", "夔龍王", "閃耀的應龍王", "閃耀的夔龍王", "應龍霸王", "夔龍霸王", "閃耀的應龍霸王", "閃耀的夔龍霸王", "盧德萊", "守衛者軍團長", "執政官軍團長", "被侵蝕的支配者"];
+const SERIES_NAMES = ["應龍王", "夔龍王"];
 let ALL_SERIES = {};
+const RACE_ORDER = ["魔族", "天族", "其他"];
 
 let cart = {}; // { "裝備名稱": 數量 }
 let currentSeries = null;
@@ -31,6 +32,7 @@ function processSeries() {
     
     if (matchedSeries) {
       ALL_SERIES[matchedSeries].grade = recipe.grade;
+      ALL_SERIES[matchedSeries].race = getSeriesRace(name);
       if (recipe.category === 'Guarder') {
         ALL_SERIES[matchedSeries].guarders['Guarder'] = name;
       } else {
@@ -47,25 +49,75 @@ function processSeries() {
   });
 }
 
+function getSeriesRace(name) {
+  if (name.includes('應龍')) return '天族';
+  if (name.includes('夔龍')) return '魔族';
+  return '其他';
+}
+
+function getRenderableSeriesEntries() {
+  const seriesMap = {};
+
+  Object.entries(RECIPES).forEach(([name, recipe]) => {
+    let matchedSeries = null;
+    let maxLen = 0;
+
+    SERIES_NAMES.forEach(seriesName => {
+      if (name.startsWith(seriesName) && seriesName.length > maxLen) {
+        matchedSeries = seriesName;
+        maxLen = seriesName.length;
+      }
+    });
+
+    if (!matchedSeries) return;
+
+    if (!seriesMap[matchedSeries]) {
+      seriesMap[matchedSeries] = { weapons: {}, guarders: {}, grade: 'Normal', race: getSeriesRace(name) };
+    }
+
+    seriesMap[matchedSeries].grade = recipe.grade;
+    seriesMap[matchedSeries].race = getSeriesRace(name);
+
+    if (recipe.category === 'Guarder') {
+      seriesMap[matchedSeries].guarders['Guarder'] = name;
+    } else {
+      seriesMap[matchedSeries].weapons[recipe.category] = name;
+    }
+  });
+
+  return Object.entries(seriesMap);
+}
+
 function renderEquipmentList() {
   const container = document.getElementById('equipment-list');
   let html = '';
+  const seriesEntries = getRenderableSeriesEntries();
   
-  Object.entries(ALL_SERIES).forEach(([seriesName, data]) => {
-    const isSelected = currentSeries === seriesName;
-    const grade = data.grade.toLowerCase();
-    
+  RACE_ORDER.forEach(race => {
+    const raceSeries = seriesEntries.filter(([_, data]) => (data.race || '其他') === race);
+    if (raceSeries.length === 0) return;
+
     html += `
-      <div class="equipment-item ${isSelected ? 'selected' : ''}" onclick="selectSeries('${seriesName}')">
-        <div class="item-icon grade-${grade}">
-          <div class="default-item-icon" style="font-size: 20px;">🛡️</div>
-        </div>
-        <div>
-          <div class="item-name ${grade}">${seriesName} 系列</div>
-          <div class="item-category">${Object.keys(data.weapons).length} 種職業武器選擇</div>
-        </div>
-      </div>
+      <div style="padding: 12px 14px 8px; font-size: 12px; font-weight: 700; color: var(--text-dim); letter-spacing: 1px;">${race} 系列</div>
     `;
+
+    raceSeries.forEach(([seriesName, data]) => {
+      const isSelected = currentSeries === seriesName;
+      const grade = (data.grade || 'Normal').toLowerCase();
+      const raceTag = data.race || '其他';
+      
+      html += `
+        <div class="equipment-item ${isSelected ? 'selected' : ''}" onclick="selectSeries('${seriesName}')">
+          <div class="item-icon grade-${grade}">
+            <div class="default-item-icon" style="font-size: 20px;">🛡️</div>
+          </div>
+          <div>
+            <div class="item-name ${grade}">${seriesName} 系列</div>
+            <div class="item-category">${raceTag} · ${Object.keys(data.weapons).length} 種裝備選擇</div>
+          </div>
+        </div>
+      `;
+    });
   });
   
   container.innerHTML = html || '<div class="empty-state"><p>無可用的裝備系列</p></div>';
@@ -78,6 +130,46 @@ function selectSeries(seriesName) {
   renderSeriesDetail();
 }
 
+function getItemImage(name) {
+  const item = ITEMS[name];
+  return item && item.image ? item.image : null;
+}
+
+const EQUIP_DISPLAY_ORDER = [
+  'Greatsword', 'Sword', 'Dagger', 'Bow', 'Magicbook', 'Orb', 'Mace', 'Staff',
+  'Guarder', 'Helmet', 'Torso', 'Pants', 'Gloves', 'Boots', 'Shoulder', 'Cape'
+];
+
+function getSeriesEquipmentItems(data) {
+  const entries = [];
+
+  Object.entries(data.weapons).forEach(([category, itemName]) => {
+    entries.push({
+      name: itemName,
+      label: WEAPON_SUBTYPES[category] || category,
+      kind: 'weapon',
+      category: category
+    });
+  });
+
+  if (data.guarders['Guarder']) {
+    entries.push({
+      name: data.guarders['Guarder'],
+      label: WEAPON_SUBTYPES['Guarder'] || '臂甲',
+      kind: 'guarder',
+      category: 'Guarder'
+    });
+  }
+
+  entries.sort((a, b) => {
+    const ia = EQUIP_DISPLAY_ORDER.indexOf(a.category);
+    const ib = EQUIP_DISPLAY_ORDER.indexOf(b.category);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+
+  return entries;
+}
+
 function renderSeriesDetail() {
   const panel = document.getElementById('series-detail-panel');
   if (!currentSeries) {
@@ -86,116 +178,98 @@ function renderSeriesDetail() {
   }
   
   const data = ALL_SERIES[currentSeries];
-  const grade = data.grade.toLowerCase();
-  
-  let weaponOptions = '';
-  Object.entries(data.weapons).forEach(([category, itemName]) => {
-    weaponOptions += `<option value="${itemName}">${category === 'null' ? '武器' : (WEAPON_SUBTYPES[category] || category)} - ${itemName}</option>`;
-  });
-  
-  let guarderHtml = '';
-  if (data.guarders['Guarder']) {
-    const gName = data.guarders['Guarder'];
-    guarderHtml = `
-      <div style="margin-top: 15px; display:flex; align-items:center; gap: 8px;">
-        <input type="checkbox" id="add-guarder" value="${gName}" style="width: 18px; height: 18px;">
-        <label for="add-guarder" style="color:var(--text-primary); cursor:pointer;">同時包含此系列備用裝備 / 臂甲 (${gName})</label>
-      </div>
-    `;
-  }
+  const grade = (data.grade || 'Normal').toLowerCase();
+  const race = data.race || getSeriesRace(currentSeries);
+  const equipmentItems = getSeriesEquipmentItems(data);
   
   panel.innerHTML = `
     <div class="fade-in">
       <h3 style="margin-bottom: 20px; font-size: 18px;" class="${grade}">
         ✨ 配置【${currentSeries} 系列】裝備
       </h3>
+      <div style="margin-bottom: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--border-dim); border-radius: 999px; color: var(--text-secondary); font-size: 12px; background: rgba(0,0,0,0.18);">
+        <span style="width: 8px; height: 8px; border-radius: 999px; background: var(--accent-cyan);"></span>
+        ${race}
+      </div>
       
       <div style="background: rgba(0,0,0,0.25); padding: 20px; border-radius: 8px; border: 1px solid var(--border-dim);">
-        <label style="display:block; margin-bottom:10px; color:var(--text-secondary); font-weight: bold;">⚔️ 選擇您的職業武器：</label>
-        <select id="series-weapon-select" class="price-input" style="width:100%; max-width: 500px; height: auto; min-height: 44px; padding: 8px 12px; font-size: 15px; cursor: pointer; line-height: 1.5;">
-          ${weaponOptions}
-        </select>
-        
-        ${guarderHtml}
-        
-        <div style="margin-top: 15px; display: flex; align-items: center; gap: 20px;">
-          <label style="color:var(--text-dim); display:flex; align-items:center; gap:6px; opacity:0.6;">
-             <input type="checkbox" disabled> 防具配置 (陸續開放)
-          </label>
-          <label style="color:var(--text-dim); display:flex; align-items:center; gap:6px; opacity:0.6;">
-             <input type="checkbox" disabled> 飾品配置 (陸續開放)
-          </label>
-        </div>
-        
-        <div style="margin-top: 24px;">
-          <button class="btn btn-primary" onclick="addSeriesToCart()" style="font-size: 15px; padding: 12px 24px;">
-            ➕ 將選定裝備加入製作清單
-          </button>
+        <label style="display:block; margin-bottom:10px; color:var(--text-secondary); font-weight: bold;">⚔️ 點選裝備直接加入或移除購物車</label>
+        <div class="equipment-option-grid">
+          ${equipmentItems.map(item => {
+            const itemQty = cart[item.name] || 0;
+            const itemImage = getItemImage(item.name);
+            return `
+              <div class="equipment-option-card ${itemQty > 0 ? 'active' : ''}" onclick="adjustCartItem('${escapeHtml(item.name)}', 1)">
+                <div class="equipment-option-thumb grade-${grade}">
+                  ${itemImage ? `<img src="${itemImage}" loading="lazy" alt="${escapeHtml(item.name)}">` : `<div class="default-item-icon">⚔</div>`}
+                  <span class="equipment-option-qty">${itemQty}</span>
+                </div>
+                <div class="equipment-option-meta">
+                  <div class="equipment-option-name ${grade}">${escapeHtml(item.name)}</div>
+                  <div class="equipment-option-category">${escapeHtml(item.label)}</div>
+                </div>
+                <div class="equipment-option-controls">
+                  <button class="equipment-option-btn" type="button" ${itemQty <= 0 ? 'disabled' : ''} onclick="event.stopPropagation(); adjustCartItem('${escapeHtml(item.name)}', -1)">−</button>
+                  <button class="equipment-option-btn primary" type="button" onclick="event.stopPropagation(); adjustCartItem('${escapeHtml(item.name)}', 1)">＋</button>
+                </div>
+              </div>
+            `;
+          }).join('')}
         </div>
       </div>
     </div>
   `;
 }
 
-function addSeriesToCart() {
-  const weaponSelect = document.getElementById('series-weapon-select');
-  let addedCount = 0;
-  if (weaponSelect && weaponSelect.value) {
-    _addToCart(weaponSelect.value);
-    addedCount++;
+function refreshCraftViews() {
+  renderCart();
+  if (currentSeries) {
+    renderSeriesDetail();
   }
-  
-  const guarderCheck = document.getElementById('add-guarder');
-  if (guarderCheck && guarderCheck.checked) {
-    _addToCart(guarderCheck.value);
-    addedCount++;
+}
+
+function adjustCartItem(name, delta) {
+  const currentQty = cart[name] || 0;
+  const nextQty = currentQty + delta;
+
+  if (nextQty <= 0) {
+    delete cart[name];
+  } else {
+    cart[name] = nextQty;
   }
-  
-  if (addedCount > 0) {
-    showToast(`成功加入 ${addedCount} 件裝備至清單！`);
-  }
+
+  refreshCraftViews();
 }
 
 function _addToCart(name) {
-  if (cart[name]) cart[name]++;
-  else cart[name] = 1;
-  renderCart();
+  adjustCartItem(name, 1);
 }
 
 function updateCartQty(name, delta) {
-  if (!cart[name]) return;
-  cart[name] += delta;
-  if (cart[name] <= 0) {
-    delete cart[name];
-  }
-  renderCart();
+  adjustCartItem(name, delta);
 }
 
 function removeFromCart(name) {
   delete cart[name];
-  renderCart();
+  refreshCraftViews();
 }
 
 function renderCart() {
   const container = document.getElementById('cart-container');
-  const emptyState = `<div class="empty-state" style="padding: 30px;"><div class="icon" style="font-size: 40px; margin-bottom: 10px;">🛒</div><p>尚未選擇任何裝備</p></div>`;
-  
+  let html = '';
+  const aggMats = {};
+
   if (Object.keys(cart).length === 0) {
-    container.innerHTML = emptyState;
-    document.getElementById('materials-grid').innerHTML = '';
-    calculateTotal();
+    container.innerHTML = '<div class="empty-state"><p>購物車為空，請從上方裝備區選擇想要製作的裝備</p></div>';
+    renderMaterials({});
     return;
   }
-  
-  let html = '';
-  let aggMats = {};
-  
+
   for (let [name, qty] of Object.entries(cart)) {
-    const item = ITEMS[name];
     const recipe = RECIPES[name];
-    const imageSrc = item && item.image ? item.image : null;
     const grade = recipe ? recipe.grade.toLowerCase() : 'normal';
-    
+    const imageSrc = getItemImage(name);
+
     html += `
       <div class="cart-item fade-in">
         <div class="cart-item-info">
@@ -215,7 +289,7 @@ function renderCart() {
         </div>
       </div>
     `;
-    
+
     // 合併材料
     if (recipe && recipe.materials) {
       recipe.materials.forEach(mat => {
@@ -224,7 +298,7 @@ function renderCart() {
       });
     }
   }
-  
+
   container.innerHTML = html;
   renderMaterials(aggMats);
 }
@@ -233,8 +307,20 @@ function renderMaterials(aggMats) {
   const grid = document.getElementById('materials-grid');
   let html = '';
   let idx = 0;
-  
-  for (let [matName, totalQty] of Object.entries(aggMats)) {
+
+  const materialPriority = (matName) => {
+    if (matName.startsWith('達人閃耀的')) return 0;
+    if (matName === '鞣製的強固龍族鱗片') return 1;
+    return 2;
+  };
+
+  const sortedMaterials = Object.entries(aggMats).sort((left, right) => {
+    const priorityDiff = materialPriority(left[0]) - materialPriority(right[0]);
+    if (priorityDiff !== 0) return priorityDiff;
+    return left[0].localeCompare(right[0], 'zh-Hant-TW');
+  });
+
+  for (let [matName, totalQty] of sortedMaterials) {
     const item = ITEMS[matName];
     const imageSrc = item && item.image ? item.image : null;
     const grade = item ? item.grade.toLowerCase() : 'normal';

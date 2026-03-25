@@ -442,6 +442,148 @@ body::before {
   gap: 8px;
 }
 
+/* ---------- 裝備卡片清單 ---------- */
+.equipment-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.equipment-option-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(12, 18, 34, 0.72);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.equipment-option-card:hover {
+  background: rgba(16, 24, 46, 0.9);
+  border-color: rgba(100, 160, 255, 0.24);
+  transform: translateY(-1px);
+}
+
+.equipment-option-card.active {
+  border-color: rgba(0, 212, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.08), 0 0 24px rgba(0, 212, 255, 0.08);
+  background: linear-gradient(135deg, rgba(16, 24, 48, 0.95), rgba(12, 18, 34, 0.9));
+}
+
+.equipment-option-thumb {
+  width: 76px;
+  height: 76px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.equipment-option-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.equipment-option-thumb.grade-epic {
+  border-color: rgba(255, 215, 0, 0.36);
+}
+
+.equipment-option-thumb.grade-unique {
+  border-color: rgba(179, 102, 255, 0.36);
+}
+
+.equipment-option-qty {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.equipment-option-meta {
+  min-width: 0;
+}
+
+.equipment-option-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.equipment-option-name.epic { color: var(--grade-epic); }
+.equipment-option-name.unique { color: var(--grade-unique); }
+
+.equipment-option-category {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.equipment-option-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.equipment-option-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-dim);
+  border-radius: 10px;
+  background: rgba(30, 40, 70, 0.7);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.equipment-option-btn:hover {
+  border-color: rgba(0, 212, 255, 0.35);
+  background: rgba(77, 159, 255, 0.18);
+}
+
+.equipment-option-btn.primary {
+  border-color: rgba(0, 212, 255, 0.35);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  color: var(--bg-primary);
+}
+
+.equipment-option-btn.primary:hover {
+  filter: brightness(1.05);
+}
+
+.equipment-option-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: rgba(30, 40, 70, 0.45);
+}
+
 /* ---------- 材料清單 ---------- */
 .materials-grid {
   display: flex;
@@ -773,6 +915,32 @@ body::before {
 
   .equipment-detail {
     padding: 20px;
+  }
+
+  .equipment-option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .equipment-option-card {
+    grid-template-columns: 68px minmax(0, 1fr);
+    grid-template-areas:
+      "thumb meta"
+      "controls controls";
+  }
+
+  .equipment-option-thumb {
+    width: 68px;
+    height: 68px;
+    grid-area: thumb;
+  }
+
+  .equipment-option-meta {
+    grid-area: meta;
+  }
+
+  .equipment-option-controls {
+    grid-area: controls;
+    justify-content: flex-end;
   }
 
   .equip-preview {
