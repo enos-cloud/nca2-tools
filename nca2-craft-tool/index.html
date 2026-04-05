@@ -604,7 +604,7 @@ body::before {
 
 .material-row {
   display: grid;
-  grid-template-columns: 48px 1fr 80px 160px 140px;
+  grid-template-columns: 48px 1fr 130px 120px 160px 140px;
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
@@ -659,16 +659,78 @@ body::before {
 .material-name.epic { color: var(--grade-epic); }
 .material-name.unique { color: var(--grade-unique); }
 
+.material-detail {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.25;
+}
+
 .material-qty {
-  font-size: 13px;
-  color: var(--accent-cyan);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--text-secondary);
   font-weight: 600;
   text-align: center;
+  line-height: 1.15;
 }
 
 .material-qty span {
   color: var(--text-dim);
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.material-qty strong {
+  color: var(--accent-cyan);
+  font-size: 15px;
+}
+
+.material-qty small {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* 已有材料數量 */
+.owned-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.owned-qty-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px 0 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: 'Noto Sans TC', sans-serif;
+  transition: var(--transition);
+  outline: none;
+}
+
+.owned-qty-input::placeholder {
+  color: var(--text-dim);
+}
+
+.owned-qty-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(77, 159, 255, 0.1);
+}
+
+.owned-currency {
+  position: absolute;
+  left: 10px;
+  font-size: 12px;
+  color: var(--accent-blue);
+  pointer-events: none;
 }
 
 /* 價格輸入 */
@@ -897,7 +959,7 @@ body::before {
   }
 
   .material-row {
-    grid-template-columns: 40px 1fr 60px 120px auto;
+    grid-template-columns: 40px 1fr 100px 110px 120px auto;
     gap: 8px;
     padding: 8px 10px;
   }
@@ -964,9 +1026,16 @@ body::before {
   }
 
   .material-qty,
+  .owned-input-wrapper,
   .price-input-wrapper,
   .material-subtotal {
     grid-column: 2;
+  }
+
+  .material-qty,
+  .material-detail {
+    text-align: left;
+    align-items: flex-start;
   }
 
   .cost-summary {
@@ -1739,6 +1808,7 @@ const RACE_ORDER = ["魔族", "天族", "其他"];
 let cart = {}; // { "裝備名稱": 數量 }
 let currentSeries = null;
 const STORAGE_PREFIX = 'aion2_price_';
+const OWNED_STORAGE_PREFIX = 'aion2_owned_';
 
 function init() {
   processSeries();
@@ -2054,27 +2124,38 @@ function renderMaterials(aggMats) {
     const item = ITEMS[matName];
     const imageSrc = item && item.image ? item.image : null;
     const grade = item ? item.grade.toLowerCase() : 'normal';
+    const ownedQty = loadOwnedQty(matName) || 0;
+    const buyQty = Math.max(totalQty - ownedQty, 0);
     const savedPrice = loadPrice(matName);
     
     html += `
-      <div class="material-row fade-in" style="animation-delay:${idx * 0.05}s">
+      <div class="material-row fade-in" style="animation-delay:${idx * 0.05}s" data-material="${escapeHtml(matName)}" data-total-qty="${totalQty}">
         <div class="material-icon grade-${grade}">
           ${imageSrc ? `<img src="${imageSrc}" loading="lazy">` : `<div class="default-item-icon">📦</div>`}
         </div>
         <div class="material-info">
           <div class="material-name ${grade}" title="${escapeHtml(matName)}">${escapeHtml(matName)}</div>
+          <div class="material-detail">已擁有 ${ownedQty.toLocaleString()}，預計需補 ${buyQty.toLocaleString()}</div>
         </div>
         <div class="material-qty">
-          x <strong>${totalQty.toLocaleString()}</strong>
+          <span>需求</span>
+          <strong>${totalQty.toLocaleString()}</strong>
+          <small>需補 ${buyQty.toLocaleString()}</small>
+        </div>
+        <div class="owned-input-wrapper">
+          <span class="owned-currency">📦</span>
+          <input type="text" class="owned-qty-input" placeholder="已有" 
+                 data-material="${escapeHtml(matName)}" data-total-qty="${totalQty}" 
+                 value="${ownedQty > 0 ? ownedQty.toLocaleString() : ''}" oninput="onOwnedQtyInput(this)" id="owned-${idx}">
         </div>
         <div class="price-input-wrapper">
           <span class="price-currency">💰</span>
           <input type="text" class="price-input" placeholder="輸入單價" 
-                 data-material="${escapeHtml(matName)}" data-qty="${totalQty}" 
+                 data-material="${escapeHtml(matName)}" data-total-qty="${totalQty}" 
                  value="${savedPrice || ''}" oninput="onPriceInput(this)" id="price-${idx}">
         </div>
         <div class="material-subtotal ${savedPrice ? 'has-value' : ''}" id="subtotal-${idx}">
-          ${savedPrice ? formatKinah(savedPrice * totalQty) : '—'}
+          ${savedPrice ? formatKinah(savedPrice * buyQty) : '—'}
         </div>
       </div>
     `;
@@ -2088,37 +2169,144 @@ function renderMaterials(aggMats) {
 function onPriceInput(input) {
   const raw = input.value.replace(/[^0-9]/g, '');
   const price = parseInt(raw) || 0;
-  const qty = parseInt(input.dataset.qty) || 0;
   const matName = input.dataset.material;
-  const idx = input.id.replace('price-', '');
-  const subtotalEl = document.getElementById(`subtotal-${idx}`);
+  const row = input.closest('.material-row');
   
   if (raw) input.value = parseInt(raw).toLocaleString();
   
   if (price > 0) {
-    subtotalEl.textContent = formatKinah(price * qty);
-    subtotalEl.classList.add('has-value');
     savePrice(matName, price);
   } else {
-    subtotalEl.textContent = '—';
-    subtotalEl.classList.remove('has-value');
     removePrice(matName);
   }
   
+  syncMaterialRow(row, { persist: false });
   calculateTotal();
+}
+
+function onOwnedQtyInput(input) {
+  const raw = input.value.replace(/[^0-9]/g, '');
+  const ownedQty = parseInt(raw) || 0;
+  const matName = input.dataset.material;
+  const row = input.closest('.material-row');
+
+  if (raw) {
+    input.value = ownedQty.toLocaleString();
+  }
+
+  if (ownedQty > 0) {
+    saveOwnedQty(matName, ownedQty);
+  } else {
+    removeOwnedQty(matName);
+  }
+
+  syncMaterialRow(row, { persist: false });
+  calculateTotal();
+}
+
+function normalizeQuantity(value) {
+  const raw = String(value ?? '').replace(/[^0-9]/g, '');
+  const parsed = parseInt(raw, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+function getMaterialRowState(row) {
+  if (!row) return null;
+
+  const totalQty = parseInt(row.dataset.totalQty) || 0;
+  const ownedInput = row.querySelector('.owned-qty-input');
+  const priceInput = row.querySelector('.price-input');
+  const subtotalEl = row.querySelector('.material-subtotal');
+  const qtyEl = row.querySelector('.material-qty');
+  const detailEl = row.querySelector('.material-detail');
+
+  const ownedQty = normalizeQuantity(ownedInput ? ownedInput.value : row.dataset.ownedQty);
+  const buyQty = Math.max(totalQty - ownedQty, 0);
+  const price = normalizeQuantity(priceInput ? priceInput.value : row.dataset.price);
+
+  return {
+    totalQty,
+    ownedQty,
+    buyQty,
+    price,
+    ownedInput,
+    priceInput,
+    subtotalEl,
+    qtyEl,
+    detailEl
+  };
+}
+
+function syncMaterialRow(row, options = {}) {
+  if (!row) return;
+
+  const { persist = true, keepNumericFormatting = true } = options;
+  const state = getMaterialRowState(row);
+  if (!state) return;
+
+  if (state.ownedInput) {
+    if (state.ownedQty > 0) {
+      state.ownedInput.value = keepNumericFormatting ? state.ownedQty.toLocaleString() : state.ownedQty.toString();
+    } else {
+      state.ownedInput.value = '';
+    }
+  }
+
+  if (state.priceInput) {
+    if (state.price > 0) {
+      state.priceInput.value = keepNumericFormatting ? state.price.toLocaleString() : state.price.toString();
+    } else {
+      state.priceInput.value = '';
+    }
+  }
+
+  if (state.qtyEl) {
+    state.qtyEl.innerHTML = `<span>需求</span><strong>${state.totalQty.toLocaleString()}</strong><small>需補 ${state.buyQty.toLocaleString()}</small>`;
+  }
+
+  if (state.detailEl) {
+    state.detailEl.textContent = `已擁有 ${state.ownedQty.toLocaleString()}，預計需補 ${state.buyQty.toLocaleString()}`;
+  }
+
+  if (state.subtotalEl) {
+    if (state.price > 0) {
+      state.subtotalEl.textContent = formatKinah(state.price * state.buyQty);
+      state.subtotalEl.classList.add('has-value');
+    } else {
+      state.subtotalEl.textContent = '—';
+      state.subtotalEl.classList.remove('has-value');
+    }
+  }
+
+  if (persist) {
+    const matName = row.dataset.material;
+    if (state.price > 0) {
+      savePrice(matName, state.price);
+    } else {
+      removePrice(matName);
+    }
+
+    if (state.ownedQty > 0) {
+      saveOwnedQty(matName, state.ownedQty);
+    } else {
+      removeOwnedQty(matName);
+    }
+  }
 }
 
 function calculateTotal() {
   let total = 0;
   let filledCount = 0;
-  const inputs = document.querySelectorAll('.price-input');
+  const rows = document.querySelectorAll('.material-row');
   
-  inputs.forEach(input => {
-    const raw = input.value.replace(/[^0-9]/g, '');
-    const price = parseInt(raw) || 0;
-    const qty = parseInt(input.dataset.qty) || 0;
+  rows.forEach(row => {
+    const state = getMaterialRowState(row);
+    if (!state) return;
+
+    const price = state.price;
+    const buyQty = state.buyQty;
     if (price > 0) {
-      total += price * qty;
+      total += price * buyQty;
       filledCount++;
     }
   });
@@ -2130,10 +2318,10 @@ function calculateTotal() {
     amountEl.textContent = total > 0 ? total.toLocaleString() : '0';
   }
   if (infoEl) {
-    if (inputs.length === 0) {
+    if (rows.length === 0) {
       infoEl.textContent = '載入對應材料後方能計算總額';
     } else {
-      infoEl.textContent = `輸入材料市價以試算總和 (${filledCount}/${inputs.length})`;
+      infoEl.textContent = `輸入材料市價以試算扣除已有數量後的總和 (${filledCount}/${rows.length})`;
     }
   }
 }
@@ -2143,6 +2331,9 @@ function clearAllPrices() {
   document.querySelectorAll('.price-input').forEach(input => {
     input.value = '';
     removePrice(input.dataset.material);
+  });
+  document.querySelectorAll('.material-row').forEach(row => {
+    syncMaterialRow(row, { persist: false, keepNumericFormatting: false });
   });
   document.querySelectorAll('.material-subtotal').forEach(el => {
     el.textContent = '—';
@@ -2161,17 +2352,17 @@ function exportReport() {
   text += `──────────────────\n【需求總材料預算明細】\n`;
   
   let total = 0;
-  document.querySelectorAll('.price-input').forEach(input => {
-    const matName = input.dataset.material;
-    const qty = input.dataset.qty;
-    const raw = input.value.replace(/[^0-9]/g, '');
-    const price = parseInt(raw) || 0;
-    const subtotal = price * qty;
+  document.querySelectorAll('.material-row').forEach(row => {
+    const state = getMaterialRowState(row);
+    if (!state) return;
+
+    const matName = row.dataset.material;
+    const subtotal = state.price * state.buyQty;
     
     total += subtotal;
-    text += `${matName} x${qty}`;
-    if (price > 0) {
-      text += ` | 單價: ${price.toLocaleString()} | 預設: ${subtotal.toLocaleString()}\n`;
+    text += `${matName} | 需求: ${state.totalQty.toLocaleString()} | 已有: ${state.ownedQty.toLocaleString()} | 需補: ${state.buyQty.toLocaleString()}`;
+    if (state.price > 0) {
+      text += ` | 單價: ${state.price.toLocaleString()} | 小計: ${subtotal.toLocaleString()}\n`;
     } else {
       text += ` | 金額待補\n`;
     }
@@ -2196,6 +2387,9 @@ function escapeHtml(str) { const d = document.createElement('div'); d.textConten
 function savePrice(name, price) { try { localStorage.setItem(STORAGE_PREFIX + name, price.toString()); } catch(e){} }
 function loadPrice(name) { try { const v = localStorage.getItem(STORAGE_PREFIX + name); return v ? parseInt(v) : null; } catch(e){ return null; } }
 function removePrice(name) { try { localStorage.removeItem(STORAGE_PREFIX + name); } catch(e){} }
+function saveOwnedQty(name, qty) { try { localStorage.setItem(OWNED_STORAGE_PREFIX + name, qty.toString()); } catch(e){} }
+function loadOwnedQty(name) { try { const v = localStorage.getItem(OWNED_STORAGE_PREFIX + name); return v ? parseInt(v) : null; } catch(e){ return null; } }
+function removeOwnedQty(name) { try { localStorage.removeItem(OWNED_STORAGE_PREFIX + name); } catch(e){} }
 function showToast(msg) {
   let toast = document.getElementById('toast');
   if (!toast) {
